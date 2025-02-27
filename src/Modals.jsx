@@ -12,15 +12,14 @@ const Modal = ({ className=" " }) => {
     showmodal,
     modalTransition,
     setModalTransition,
+    handleClose,
   } = useModalContext();
 
-    useEffect(() => {
-      if (showmodal) {
-        setModalTransition("scale-100 opacity-100"); // Modal is showing, apply transition
-      } else {
-        setModalTransition("scale-90 opacity-0"); // Modal is hiding, apply transition
-      }
-    }, [showmodal]);
+ 
+
+
+
+
 
   return (
     
@@ -29,13 +28,13 @@ const Modal = ({ className=" " }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className={`${className} bg-white w-120 h-60 p-6 rounded-xl shadow-lg transition-all relative flex flex-col justify-center items-center `}
+        className={`${className} ${modalTransition} bg-white w-120 h-60 p-6 rounded-xl shadow-lg transition-all relative flex flex-col justify-center items-center `}
         onClick={(e) => e.stopPropagation()}
       >
        
         <button
-          className={`${className} transition-all ease-in-out duration-200 absolute top-4 right-4 text-gray-500 hover:text-gray-700`}
-          onClick={() => setShowModal(false)}
+          className={`${className}  absolute top-4 right-4 text-gray-500 hover:text-gray-700 transition-all ease-linear duration-150`}
+          onClick={handleClose}
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
@@ -52,7 +51,7 @@ const Modal = ({ className=" " }) => {
             />
           </svg>
         </button>
-        <p>Modal Content</p>
+        <p className="text-black font-bold">Modal Content</p>
         <input
           onChange={handleCost}
           type="number"
@@ -65,7 +64,7 @@ const Modal = ({ className=" " }) => {
           className="mt-5 text-black border-1 rounded-md w-70 h-full"
         >
         </input>
-        <button onClick={depositamount}  className=" mt-12 text-black w-25 h-12 rounded-2xl hover:bg-[#ffb300] transition ease-linear">
+        <button onClick={depositamount}  className="border mt-12 text-black w-25 h-12 rounded-2xl hover:bg-[#ffb300] transition ease-linear">
           Cashout
         </button>
       </div>

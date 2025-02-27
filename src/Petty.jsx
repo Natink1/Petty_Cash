@@ -15,6 +15,7 @@ const ModalContext = createContext({
   setModalTransition: () => {},
   cashoutHistory: [],
   setCashoutHistory: () => {},
+  handleClose: () => {},
 });
 
 export const ModalProvider = ({ children }) => {
@@ -24,16 +25,44 @@ export const ModalProvider = ({ children }) => {
   const [modalTransition, setModalTransition] = useState("");
   const [cashoutHistory, setCashoutHistory] = useState([]);
 
+  // useEffect(() => {
+  //   if(amount <= 0){
+  //     setAmount(0);
+  //   }
+  // },[amount])
+  const handleClose = () => {
+    setModalTransition("scale-90 opacity-0"); 
+    setTimeout(() => {
+      setShowModal(false);
+    }, 300);
+  };
+ 
   const depositamount = () => {
     const min = amount - cashout;
-    if (amount <= 0) {
+    if (amount == 0 || amount < 0 || cashout > amount ) 
+      {
       alert("we are out of Cash");
-    } else {
-      setAmount(min);
-      setShowModal(false);
-      setCashoutHistory([...cashoutHistory, cashout]);
+  
+     
+    } 
+    else if(cashout == !0 || cashout == ""){
+      alert("please enter value");
+      
+    }
+    else {
+      handleClose();
+      setTimeout(() => {
+        setAmount(min);
+        setShowModal(false);
+        setCashoutHistory([...cashoutHistory, cashout]);
+        setCashout(0);
+      }, 300);
+    
+      
+
     }
   };
+
 
   // const list = () => {
 
@@ -59,6 +88,7 @@ export const ModalProvider = ({ children }) => {
     setModalTransition,
     cashoutHistory,
     setCashoutHistory,
+    handleClose,
   };
 
   return (
@@ -82,6 +112,7 @@ const Petty = () => {
     setModalTransition,
     cashoutHistory,
     setCashoutHistory,
+    handleClose,
   } = useModalContext();
 
   useEffect(() => {
@@ -91,8 +122,6 @@ const Petty = () => {
       setModalTransition("scale-90 opacity-0"); // Modal is hiding, apply transition
     }
   }, [showmodal]);
-
-
 
   return (
     <>
@@ -111,20 +140,22 @@ const Petty = () => {
           {showmodal &&
             createPortal(
               <Modal
-                className={`  transition-all duration-300 ease-in-out ${modalTransition}`}
+                className={`transition-all duration-300 ease-in-out ${modalTransition}`}
               />,
               document.body
             )}
         </div>
       </div>
       {cashoutHistory.map((cashoutAmount, index) => (
-  <div key={index} className="mt-5 text-center">
-    <h1 className="text-lg font-semibold">
-      Your Disposed Amount is: ${cashoutAmount}
-    </h1>
-  </div>
-))}
-        
+        <div
+          key={index}
+          className="mt-5 text-center bg-gray-800 rounded-2xl w-100 flex place-self-center justify-center"
+        >
+          <h1 className="text-lg font-semibold">
+            Your Disposed: ${cashoutAmount} for
+          </h1>
+        </div>
+      ))}
     </>
   );
 };
