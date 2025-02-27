@@ -13,7 +13,7 @@ const ModalContext = createContext({
   depositamount: () => {},
   modalTransition: "",
   setModalTransition: () => {},
-  cashoutHistory: 0,
+  cashoutHistory: [],
   setCashoutHistory: () => {},
 });
 
@@ -22,7 +22,7 @@ export const ModalProvider = ({ children }) => {
   const [amount, setAmount] = useState(1000);
   const [cashout, setCashout] = useState(0);
   const [modalTransition, setModalTransition] = useState("");
-  const [cashoutHistory, setCashoutHistory] = useState(0);
+  const [cashoutHistory, setCashoutHistory] = useState([]);
 
   const depositamount = () => {
     const min = amount - cashout;
@@ -31,6 +31,7 @@ export const ModalProvider = ({ children }) => {
     } else {
       setAmount(min);
       setShowModal(false);
+      setCashoutHistory([...cashoutHistory, cashout]);
     }
   };
 
@@ -91,7 +92,7 @@ const Petty = () => {
     }
   }, [showmodal]);
 
-  setCashoutHistory(cashout);
+
 
   return (
     <>
@@ -116,9 +117,14 @@ const Petty = () => {
             )}
         </div>
       </div>
-      <div className="mt-50 place-self-center">
-        <h1>Your Disposed amount is: {cashoutHistory}</h1>
-      </div>
+      {cashoutHistory.map((cashoutAmount, index) => (
+  <div key={index} className="mt-5 text-center">
+    <h1 className="text-lg font-semibold">
+      Your Disposed Amount is: ${cashoutAmount}
+    </h1>
+  </div>
+))}
+        
     </>
   );
 };
