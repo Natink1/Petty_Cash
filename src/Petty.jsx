@@ -13,23 +13,33 @@ const ModalContext = createContext({
   depositamount: () => {},
   modalTransition: "",
   setModalTransition: () => {},
+  cashoutHistory: 0,
+  setCashoutHistory: () => {},
 });
-
-
 
 export const ModalProvider = ({ children }) => {
   const [showmodal, setShowModal] = useState(false);
   const [amount, setAmount] = useState(1000);
   const [cashout, setCashout] = useState(0);
   const [modalTransition, setModalTransition] = useState("");
-
+  const [cashoutHistory, setCashoutHistory] = useState(0);
 
   const depositamount = () => {
     const min = amount - cashout;
-    setAmount(min);
-    setCashout(0);
-    setShowModal(false);
+    if (amount <= 0) {
+      alert("we are out of Cash");
+    } else {
+      setAmount(min);
+      setShowModal(false);
+    }
   };
+
+  // const list = () => {
+
+  //     setCashoutHistory(cashout);
+  //     setCashout(0);
+
+  // };
 
   const handleCost = (e) => {
     setCashout(Number(e.target.value));
@@ -46,8 +56,9 @@ export const ModalProvider = ({ children }) => {
     depositamount,
     modalTransition,
     setModalTransition,
+    cashoutHistory,
+    setCashoutHistory,
   };
-
 
   return (
     <ModalContext.Provider value={value}>{children}</ModalContext.Provider>
@@ -68,8 +79,10 @@ const Petty = () => {
     depositamount,
     modalTransition,
     setModalTransition,
+    cashoutHistory,
+    setCashoutHistory,
   } = useModalContext();
-  
+
   useEffect(() => {
     if (showmodal) {
       setModalTransition("scale-100 opacity-100"); // Modal is showing, apply transition
@@ -78,6 +91,7 @@ const Petty = () => {
     }
   }, [showmodal]);
 
+  setCashoutHistory(cashout);
 
   return (
     <>
@@ -101,6 +115,9 @@ const Petty = () => {
               document.body
             )}
         </div>
+      </div>
+      <div className="mt-50 place-self-center">
+        <h1>Your Disposed amount is: {cashoutHistory}</h1>
       </div>
     </>
   );
