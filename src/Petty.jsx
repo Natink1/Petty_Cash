@@ -59,13 +59,6 @@ export const ModalProvider = ({ children }) => {
     }
   };
 
-  // const list = () => {
-
-  //     setCashoutHistory(cashout);
-  //     setCashout(0);
-
-  // };
-
   const handleCost = (e) => {
     setCashout(Number(e.target.value));
   };
