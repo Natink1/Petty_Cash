@@ -16,6 +16,9 @@ const ModalContext = createContext({
   cashoutHistory: [],
   setCashoutHistory: () => {},
   handleClose: () => {},
+  reason: [],
+  setReason: () => {},
+  handleReason:() => {},
 });
 
 export const ModalProvider = ({ children }) => {
@@ -24,13 +27,13 @@ export const ModalProvider = ({ children }) => {
   const [cashout, setCashout] = useState(0);
   const [modalTransition, setModalTransition] = useState("");
   const [cashoutHistory, setCashoutHistory] = useState([]);
-
+  const [reason, setReason] = useState("");
   // useEffect(() => {
   //   if(amount <= 0){
   //     setAmount(0);
   //   }
   // },[amount])
-  
+
   const handleClose = () => {
     setModalTransition("scale-90 opacity-0"); 
     setTimeout(() => {
@@ -56,6 +59,7 @@ export const ModalProvider = ({ children }) => {
         setAmount(min);
         setShowModal(false);
         setCashoutHistory([...cashoutHistory, cashout]);
+        
         setCashout(0);
       }, 300);
     
@@ -76,6 +80,10 @@ export const ModalProvider = ({ children }) => {
     setCashout(Number(e.target.value));
   };
 
+  const handleReason = (e) => {
+    setReason(e.target.value);
+  }
+
   const value = {
     showmodal,
     setShowModal,
@@ -90,6 +98,8 @@ export const ModalProvider = ({ children }) => {
     cashoutHistory,
     setCashoutHistory,
     handleClose,
+    reason,
+    setReason,
   };
 
   return (
@@ -114,6 +124,8 @@ const Petty = () => {
     cashoutHistory,
     setCashoutHistory,
     handleClose,
+    setReason,
+    reason,
   } = useModalContext();
 
   useEffect(() => {
@@ -153,7 +165,7 @@ const Petty = () => {
           className="mt-5 text-center bg-gray-800 rounded-2xl w-100 flex place-self-center justify-center"
         >
           <h1 className="text-lg font-semibold">
-            Your Disposed: ${cashoutAmount} for
+            Your Disposed: ${cashoutAmount} for {reason}
           </h1>
         </div>
       ))}

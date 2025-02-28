@@ -13,6 +13,9 @@ const Modal = ({ className = " " }) => {
     modalTransition,
     setModalTransition,
     handleClose,
+    reason,
+    setReason,
+    handleReason,
   } = useModalContext();
 
   return (
@@ -45,7 +48,7 @@ const Modal = ({ className = " " }) => {
         </button>
 
         <p className="text-black font-bold">Modal Content</p>
-        
+
         <div className="flex items-center gap-2 mt-5">
           <h1 className="text-black ">Amount</h1>
           <input
@@ -58,6 +61,7 @@ const Modal = ({ className = " " }) => {
         <div className="flex items-center gap-2 mt-5">
           <h1 className="text-black ">Reason</h1>
           <input
+          onChange={handleReason}
           placeholder="enter reason here"
           type="text"
           className=" text-black border-1 rounded-md w-70 h-8"
