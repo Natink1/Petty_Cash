@@ -5,9 +5,9 @@ import Modal from "./Modals";
 const ModalContext = createContext({
   showmodal: false,
   setShowModal: () => {},
-  amount: 1000, // Initial amount
+  amount: 1000,
   setAmount: () => {},
-  cashout: 0, // Initial cashout
+  cashout: 0,
   setCashout: () => {},
   handleCost: () => {},
   depositamount: () => {},
@@ -30,6 +30,7 @@ export const ModalProvider = ({ children }) => {
   //     setAmount(0);
   //   }
   // },[amount])
+  
   const handleClose = () => {
     setModalTransition("scale-90 opacity-0"); 
     setTimeout(() => {
@@ -39,7 +40,7 @@ export const ModalProvider = ({ children }) => {
  
   const depositamount = () => {
     const min = amount - cashout;
-    if (amount == 0 || amount < 0 || cashout > amount ) 
+    if (amount <= 0 || cashout > amount ) 
       {
       alert("we are out of Cash");
   
