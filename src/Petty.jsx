@@ -16,9 +16,9 @@ const ModalContext = createContext({
   cashoutHistory: [],
   setCashoutHistory: () => {},
   handleClose: () => {},
-  reason: [],
+  reason: "",
   setReason: () => {},
-  handleReason:() => {},
+  handleReason: () => {},
 });
 
 export const ModalProvider = ({ children }) => {
@@ -35,39 +35,29 @@ export const ModalProvider = ({ children }) => {
   // },[amount])
 
   const handleClose = () => {
-    setModalTransition("scale-90 opacity-0"); 
+    setModalTransition("scale-90 opacity-0");
     setTimeout(() => {
       setShowModal(false);
     }, 300);
   };
- 
+
   const depositamount = () => {
     const min = amount - cashout;
-    if (amount <= 0 || cashout > amount ) 
-      {
+    if (amount <= 0 || cashout > amount) {
       alert("we are out of Cash");
-  
-     
-    } 
-    else if(cashout == !0 || cashout == ""){
+    } else if (cashout == !0 || cashout == "") {
       alert("please enter value");
-      
-    }
-    else {
+    } else {
       handleClose();
       setTimeout(() => {
         setAmount(min);
         setShowModal(false);
-        setCashoutHistory([...cashoutHistory, cashout]);
-        
+        setCashoutHistory([...cashoutHistory, { cashout, reason }]);
         setCashout(0);
+        setReason("");
       }, 300);
-    
-      
-
     }
   };
-
 
   // const list = () => {
 
@@ -82,7 +72,7 @@ export const ModalProvider = ({ children }) => {
 
   const handleReason = (e) => {
     setReason(e.target.value);
-  }
+  };
 
   const value = {
     showmodal,
@@ -100,6 +90,7 @@ export const ModalProvider = ({ children }) => {
     handleClose,
     reason,
     setReason,
+    handleReason,
   };
 
   return (
@@ -159,13 +150,13 @@ const Petty = () => {
             )}
         </div>
       </div>
-      {cashoutHistory.map((cashoutAmount, index) => (
+      {cashoutHistory.map((entry, index) => (
         <div
           key={index}
           className="mt-5 text-center bg-gray-800 rounded-2xl w-100 flex place-self-center justify-center"
         >
           <h1 className="text-lg font-semibold">
-            Your Disposed: ${cashoutAmount} for {reason}
+            Your Disposed: ${entry.cashout} for {entry.reason}
           </h1>
         </div>
       ))}
