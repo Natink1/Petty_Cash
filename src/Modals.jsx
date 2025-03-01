@@ -24,7 +24,7 @@ const Modal = ({ className = " " }) => {
       onClick={(e) => e.stopPropagation()}
     >
       <div
-        className={`${className} ${modalTransition} bg-white w-120 h-60 p-6 rounded-xl shadow-lg transition-all relative flex flex-col justify-center items-center `}
+        className={`${className} ${modalTransition} bg-white w-120 h-60 p-6 rounded-xl shadow-lg transition-all relative flex flex-col items-center`}
         onClick={(e) => e.stopPropagation()}
       >
         <button
@@ -70,7 +70,7 @@ const Modal = ({ className = " " }) => {
    
         <button
           onClick={depositamount}
-          className="border mt-12 text-black w-25 h-12 rounded-2xl hover:bg-[#ffb300] transition ease-linear"
+          className="border mt-12 text-black w-25 h-12 rounded-2xl hover:bg-[#ffb300] hover:border-[#ffb300] transition ease-linear"
         >
           Cashout
         </button>
